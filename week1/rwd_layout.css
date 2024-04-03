@@ -9,11 +9,10 @@
     letter-spacing: 1px;
     font-size: 20px;
     letter-spacing: 1px;
-
 }
 
 .headline {
-    margin: 0 10px;
+    margin: 0 9px;
 }
 
 .navbar-right-menu {
@@ -94,8 +93,7 @@
     height: 30px; 
     opacity: 0.8;
     background-image: url("./public/icons8-star-48.svg"); 
-    background-size: contain; 
-    background-repeat: no-repeat; 
+    background-size: cover; 
 }
 
 @media (min-width: 1201px) and (max-width: 1920px) {
