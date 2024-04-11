@@ -43,9 +43,9 @@ function findAndPrint(messages, currentStation) {
     for (const [person, message] of Object.entries(messages)) {
         const match = message.match(stationRegex);
         if (match) {
-          const station = match[0]; 
-          const distance = Math.abs(stationAndDistance[currentStation] - stationAndDistance[station]);
-          if (distance < minDistance) {
+            const station = match[0]; 
+            const distance = Math.abs(stationAndDistance[currentStation] - stationAndDistance[station]);
+            if (distance < minDistance) {
               minDistance = distance;
               closestPerson = person;
             }

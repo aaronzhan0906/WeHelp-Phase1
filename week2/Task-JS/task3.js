@@ -7,18 +7,17 @@ function func(...data) {
         let result = [];
 
         // get middleName
-        if (fullNameSpilt.length % 2 === 1) {
-
+        if (fullNameSpilt.length % 2 === 1) 
             // retain the middle character
+            {
             result = fullNameSpilt.filter((_, index) => index === Math.floor(fullNameSpilt.length / 2));
             } else if (fullNameSpilt.length === 2) {
             result = fullNameSpilt.filter((_, index) => index === 1);
             } else if (fullNameSpilt.length % 2 === 0) {
             result = fullNameSpilt.filter((_, index) => index === 2);
             }       
-
-            names[name] = result.join("");
-        }
+        names[name] = result.join("");
+    }
 
     // get the unique array
     const uniqueArray = Object.values(names);
@@ -26,7 +25,7 @@ function func(...data) {
     // get the unique index
     const unique = []
     for (const element of uniqueArray) {
-        if (uniqueArray.filter(item => item === element).length === 1) {
+        {
             unique.push(element);
         } 
     }
@@ -38,7 +37,8 @@ function func(...data) {
 
     // get the key of the unique index
     for (const key in names) {
-        if (names[key] === unique[0]) {
+        if (names[key] === unique[0]) 
+        {
             console.log(key);
         }
     }
