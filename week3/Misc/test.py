@@ -5,12 +5,12 @@ with open("./public/taipei-attractions-assignment-2", mode="r") as file:
     parsed_data = json.load(file)
 
 attractions = parsed_data["data"]
-attractions_dict = {}
+mrt_list = []
 
-for attraction in attractions:      
+# 遍历所有景点
+for attraction in attractions:
+    # 获取当前景点的 MRT 列表
     mrt_key = attraction["MRT"]
-    full_address = attraction["address"]
-    index = full_address.find("區") 
-    mrt_district = full_address[index-3:index+1]  # 提取区域信息，例如 "xx區"
-    mrt_key = mrt_key + "站"
-    attractions_dict[mrt_key] = mrt_district
+    mrt_list.extend(mrt_key.split("、"))
+
+print(mrt_list)
