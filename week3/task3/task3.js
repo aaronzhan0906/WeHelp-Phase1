@@ -18,17 +18,6 @@ async function getData() {
     renderBoxes(bigTitles, smallTitles);
 }
 
-function getImageURL(results) {
-    for (let i = 0; i < results.length; i++) {
-        const fileList = results[i].filelist; 
-        const urlRegex = /http.*?\.jpg/i;
-        const match = urlRegex.exec(fileList);
-        imageURLs.push(match ? match[0] : "");
-    }
-}
-
-
-
 function getTitles(results){
     titles.length = 0;
     for (let i = 0; i < results.length; i++){
@@ -36,6 +25,15 @@ function getTitles(results){
     }
 }
 
+function getImageURL(results) {
+    for (let i = 0; i < results.length; i++) {
+        const fileList = results[i].filelist;
+        const fileListArray = fileList.split("https://");
+        const imageURL = "https://" + fileListArray[1];
+        imageURLs.push(imageURL);
+    }
+    return imageURLs;
+}
 
 function renderBoxes(bigTitles, smallTitles) {
     // querySelectorAll() 

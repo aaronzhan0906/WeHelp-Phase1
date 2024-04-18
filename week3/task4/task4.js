@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
 async function getData() {
     
     const response = await fetch(URL);
@@ -35,15 +34,6 @@ async function getData() {
     }
     return true;
 
-}
-
-function getImageURL(results) {
-    for (let i = 0; i < results.length; i++) {
-        const fileList = results[i].filelist; 
-        const urlRegex = /http.*?\.jpg/i;
-        const match = urlRegex.exec(fileList);
-        imageURLs.push(match ? match[0] : "");
-    }
 }
 
 function getTitles(results){
@@ -92,6 +82,16 @@ function renderBoxes(bigTitles, smallTitles) {
     });
 }
 
+function getImageURL(results) {
+    for (let i = 0; i < results.length; i++) {
+        const fileList = results[i].filelist;
+        const fileListArray = fileList.split("https://");
+        const imageURL = "https://" + fileListArray[1];
+        imageURLs.push(imageURL);
+    }
+    return imageURLs;
+}
+
 getData();
 
 // load more function
@@ -117,7 +117,7 @@ function loadMore() {
     
     for (let i = 0; i < boxCount; i++) {
         const bigBoxContainer = document.createElement("div");
-        bigBoxContainer.className = `big-box big-box-${i + 1 + spotCount}`;
+        bigBoxContainer.className = `big-box big-box-${i + 1}`;
         gridContainer.appendChild(bigBoxContainer);
 
         bigBoxContainer.style.backgroundImage = `url('${imageURLs[i + 3 + spotCount]}')`;

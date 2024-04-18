@@ -23,7 +23,7 @@ with open("spot.csv", mode="w", newline='') as file:
             if serial_no_data["SERIAL_NO"] == get_serial:
                 district_address = serial_no_data["address"]
                 index = district_address.find("區")
-                District = district_address[index-3:index+1]
+                District = district_address[index-3:index+1].strip()  # strip() to remove white space
                 break
 
         # get longtitude and latitude
@@ -31,11 +31,8 @@ with open("spot.csv", mode="w", newline='') as file:
         Latitude = spot["latitude"]
 
         # get ImageURL
-        url_regex = r"(https?:\/\/[^\s]+\.(?:jpg|JPG))"
-        filelist = spot["filelist"]
-        regex_filelist = filelist.replace(r"\\", "")
-        list_regex_filelist = re.sub(r"(\.(?:jpg|JPG))", r"\1 ", regex_filelist)
-        ImageURL = re.findall(url_regex, list_regex_filelist)[0]
+        split_urls = spot["filelist"].split("https://")
+        ImageURL = "https://" + split_urls[1]
 
         writer.writerow([Stitle, District, Longitude, Latitude, ImageURL])
     
@@ -49,7 +46,7 @@ for entry in mrt_serialno_district["data"]:
 station_regex = '|'.join(map(re.escape, station_names))
 
 # open file to write mrt.csv
-with open("mrt.csv", mode="w") as file:
+with open("mrt.csv", mode="w", newline="") as file:
     writer = csv.writer(file)
 
     # create a dictionary to store attractions near each station
@@ -59,10 +56,9 @@ with open("mrt.csv", mode="w") as file:
         get_info = station["info"]
         get_station_name = re.findall(station_regex, get_info)
         if get_station_name:
-            station_attractions[get_station_name[0]] = station_attractions.get(get_station_name[0], []) + [station["stitle"]]
-        else:
-            continue
+            station_name = get_station_name[0]
+            station_attractions.setdefault(station_name, []).append(station["stitle"])
 
     # write station and attractions to mrt.csv
     for station_name, attractions in station_attractions.items():
-        writer.writerow([station_name, ", ".join(attractions)])
+        writer.writerow([station_name] + attractions)

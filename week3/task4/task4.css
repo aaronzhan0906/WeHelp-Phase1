@@ -157,12 +157,7 @@ body {
     grid-column : span 2;
 }
 
-.big-box-1, .big-box-6,
-.big-box-11, .big-box-16,
-.big-box-21, .big-box-26,
-.big-box-31, .big-box-36,
-.big-box-41, .big-box-46,
-.big-box-51, .big-box-56 {
+.big-box-1, .big-box-6 {
     grid-column : span 2;
 }
 
