@@ -36,14 +36,6 @@ with open("spot.csv", mode="w", newline='') as file:
 
         writer.writerow([Stitle, District, Longitude, Latitude, ImageURL])
     
-# create a list to store all station names
-station_names = []
-
-# create regex for station name
-for entry in mrt_serialno_district["data"]:
-    station_names.extend(entry["MRT"].split("、"))
-
-station_regex = '|'.join(map(re.escape, station_names))
 
 # open file to write mrt.csv
 with open("mrt.csv", mode="w", newline="") as file:
@@ -52,12 +44,14 @@ with open("mrt.csv", mode="w", newline="") as file:
     # create a dictionary to store attractions near each station
     station_attractions = {}
 
-    for station in parsed_main_data["data"]["results"]:
-        get_info = station["info"]
-        get_station_name = re.findall(station_regex, get_info)
-        if get_station_name:
-            station_name = get_station_name[0]
-            station_attractions.setdefault(station_name, []).append(station["stitle"])
+    get_spot_list = parsed_main_data["data"]["results"]
+    for spot in get_spot_list:
+        # get serial_no in 1st JSON file
+        get_serial = spot["SERIAL_NO"]
+        for serial_no_data in mrt_serialno_district["data"]:
+            if serial_no_data["SERIAL_NO"] == get_serial:
+                station_name = serial_no_data["MRT"]
+                station_attractions.setdefault(station_name, []).append(spot["stitle"])
 
     # write station and attractions to mrt.csv
     for station_name, attractions in station_attractions.items():
