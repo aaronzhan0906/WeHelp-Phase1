@@ -35,7 +35,7 @@ h2 {
     font-weight: 500;
 }
 
-h3 {
+h3, a {
     margin-top:30px;
     text-align: center;
     margin-bottom: 10px;
@@ -50,12 +50,17 @@ h3 {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"]
+{
     width: 180px;
     height: 15px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
+}
+
+#square {
+    margin: 5px;
 }
 
 button {
@@ -68,4 +73,15 @@ button {
     border-radius: 3px;
     cursor: pointer;
     font-size: 0.9rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+
+.square-answer {
+    text-align: center;
+    
 }
