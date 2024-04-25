@@ -61,11 +61,11 @@ async def signout(request: Request):
 
 
 # Square Page with Form and Result 
-@app.post("/square")
-async def calculate_square(request: Request):
-    form = await request.form()
-    number = int(form.get("number", "0"))
-    return RedirectResponse(url=f"/square/{number}", status_code=status.HTTP_302_FOUND)
+# @app.post("/square")
+# async def calculate_square(request: Request):
+#     form = await request.form()
+#     number = int(form.get("number", "0"))
+#     return RedirectResponse(url=f"/square/{number}", status_code=status.HTTP_302_FOUND)
 
 @app.get("/square/{number}", response_class=HTMLResponse)
 async def calculate_square(request: Request, number: int = Path(...)):
