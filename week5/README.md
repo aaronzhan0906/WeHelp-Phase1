@@ -6,7 +6,7 @@ CREATE DATABASE website;
 SHOW DATABASES;
 USE website;
 ```
-[task2_1](/screenshot/task2_1.png)(
+[task2_1](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task2_1.png?raw=true)
 
 
 >Create a new table named member, in the website database, designed as below:
@@ -20,7 +20,7 @@ CREATE TABLE member (
   time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 ```
-![task2_2](/screenshot/task2_2.png)
+![task2_2](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task2_2.png?raw=true)
 
 ---
 ### Task 3: SQL CRUD 
