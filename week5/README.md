@@ -6,7 +6,7 @@ CREATE DATABASE website;
 SHOW DATABASES;
 USE website;
 ```
-![task2_1](/screenshot/task2_1.png)
+[task2_1](/screenshot/task2_1.png)
 ---
 ---
 ```
@@ -23,5 +23,4 @@ CREATE TABLE member (
 ![task2_2](/screenshot/task2_2.png)
 
 ---
-
 ### Task 3: SQL CRUD 
