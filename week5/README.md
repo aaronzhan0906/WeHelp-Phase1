@@ -123,3 +123,58 @@ FROM (
 
 ---
 ### Task 5: SQL JOIN
+1.Create a new table named message, in the website database. designed as below:
+```
+CREATE TABLE message (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  member_id BIGINT NOT NULL,
+  content VARCHAR(255) NOT NULL,
+  like_count INT UNSIGNED NOT NULL DEFAULT 0,
+  time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (member_id) REFERENCES member(id)
+);
+
+INSERT INTO message (member_id, content, like_count) VALUES
+(5, '這是第一條留言', 10),
+(2, '這是第二條留言', 8),
+(1, '這是第三條留言', 15),
+(1, '這是第四條留言', 20),
+(3, '這是第五條留言', 5);
+```
+![task5_1](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task5_1.png?raw=true)
+
+2.SELECT all messages, including sender names. We have to JOIN the member table to get that.
+```
+SELECT message.id, member.username AS sender_name, message.content, message.like_count, message.time
+FROM message
+JOIN member ON message.member_id = member.id;
+```
+![task5_2](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task5_2.png?raw=true)
+
+3.SELECT all messages, including sender names, where sender username equals to test. We have to JOIN the member table to filter and get that.
+```
+SELECT message.id, member.username AS sender_name, message.content, message.like_count, message.time
+FROM message
+JOIN member ON message.member_id = member.id
+WHERE member.username = 'test';
+
+```
+![task5_3](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task5_3.png?raw=true)
+
+4.Use SELECT, SQL Aggregation Functions with JOIN statement, get the average like count of messages where sender username equals to test.
+```
+SELECT AVG(message.like_count) AS specific_sender_avg_like_count
+FROM message
+JOIN member ON message.member_id = member.id
+WHERE member.username = 'test';
+```
+![task5_4](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task5_4.png?raw=true)
+
+5.Use SELECT, SQL Aggregation Functions with JOIN statement, get the average like count of messages GROUP BY sender username.
+```
+SELECT member.username AS sender_name, AVG(message.like_count) AS avg_like_count
+FROM message
+JOIN member ON message.member_id = member.id
+GROUP BY member.username;
+```
+![task5_5](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task5_5.png?raw=true)
