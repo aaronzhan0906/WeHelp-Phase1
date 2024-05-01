@@ -34,7 +34,7 @@ async def signin(request: Request):
         return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
     else:
         error_message = "帳號、密碼輸入錯誤"
-        return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND,)
+        return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
 
 # Success Page
 @app.get("/member", response_class=HTMLResponse)
