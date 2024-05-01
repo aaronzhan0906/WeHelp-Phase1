@@ -42,37 +42,37 @@ INSERT INTO member (name, username, password, follower_count) VALUES
 ```
 SELECT * FROM member;
 ```
-![task3_3])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_3.png?raw=true)
+![task3_2](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_2.png?raw=true)
 
 3.SELECT all rows from the member table, in descending order of time.
 ```
 SELECT * FROM member ORDER BY time DESC;
 ```
-![task3_4])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_4.png?raw=true)
+![task3_3](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_3.png?raw=true)
 
 4.SELECT total 3 rows, second to fourth, from the member table, in descending order of time. Note: it does not mean SELECT rows where id are 2, 3, or 4.
 ```
 SELECT * FROM member ORDER BY time DESC LIMIT 3 OFFSET 1;
 ```
-![task3_5])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_5.png?raw=true)
+![task3_4](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_4.png?raw=true)
 
 5.SELECT rows where username equals to test.
 ```
 SELECT * FROM member WHERE username = 'test';
 ```
-![task3_6])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_6.png?raw=true)
+![task3_5](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_5.png?raw=true)
 
 6.SELECT rows where name includes the es keyword.
 ```
 SELECT * FROM member WHERE name LIKE '%es%';
 ```
-![task3_7])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_7.png?raw=true)
+![task3_6](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_6.png?raw=true)
 
 7.SELECT rows where both username and password equal to test.
 ```
 SELECT * FROM member WHERE username = 'test' AND password = 'test';
 ```
-![task3_8])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_8.png?raw=true)
+![task3_7](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_7.png?raw=true)
 
 8.UPDATE data in name column to test2 where username equals to test.
 ```
@@ -80,7 +80,7 @@ SET SQL_SAFE_UPDATES=0;
 UPDATE member SET name='test2' WHERE username='test';
 SELECT * FROM member;
 ```
-![task3_9])(https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_9.png?raw=true)
+![task3_8](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task3_8.png?raw=true)
 
 
 <br> 
