@@ -6,7 +6,7 @@ CREATE DATABASE website;
 SHOW DATABASES;
 USE website;
 ```
-[task2_1](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task2_1.png?raw=true)
+![task2_1](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task2_1.png?raw=true)
 
 
 >Create a new table named member, in the website database, designed as below:
