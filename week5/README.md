@@ -6,9 +6,10 @@ CREATE DATABASE website;
 SHOW DATABASES;
 USE website;
 ```
-[task2_1](/screenshot/task2_1.png)
----
----
+[task2_1](/screenshot/task2_1.png)(
+
+
+2.Create a new table named member, in the website database, designed as below:
 ```
 CREATE TABLE member (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -19,7 +20,6 @@ CREATE TABLE member (
   time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 ```
-2.Create a new table named member, in the website database, designed as below:
 ![task2_2](/screenshot/task2_2.png)
 
 ---
