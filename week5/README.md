@@ -87,6 +87,36 @@ SELECT * FROM member;
 
 ---
 ### Task 4: SQL Aggregation Functions
+1.SELECT how many rows from the member table.
+```
+SELECT COUNT(*) FROM member;
+```
+![task4_1](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task4_1.png?raw=true)
+
+
+2.SELECT the sum of follower_count of all the rows from the member table.
+```
+SELECT SUM(follower_count) FROM member;
+```
+![task4_2](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task4_2.png?raw=true)
+
+3.SELECT the average of follower_count of all the rows from the member table.
+```
+SELECT AVG(follower_count) FROM member;
+```
+![task4_3](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task4_3.png?raw=true)
+
+4.SELECT the average of follower_count of the first 2 rows, in descending order of follower_count, from the member table.
+```
+FROM (
+	SELECT follower_count
+	FROM member
+	ORDER BY follower_count DESC
+	LIMIT 2
+) temp;
+```
+![task4_4](https://github.com/aaronzhan0906/WeHelp-Phase1/blob/main/week5/screenshot/task4_4.png?raw=true)
+
 
 
 <br> 
