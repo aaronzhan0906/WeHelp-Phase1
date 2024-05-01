@@ -1,6 +1,6 @@
 ### Task 2: Create database and table in your MySQL server
 
-1.Create a new database named website.
+>Create a new database named website.
 ```
 CREATE DATABASE website;
 SHOW DATABASES;
@@ -9,7 +9,7 @@ USE website;
 [task2_1](/screenshot/task2_1.png)(
 
 
-2.Create a new table named member, in the website database, designed as below:
+>Create a new table named member, in the website database, designed as below:
 ```
 CREATE TABLE member (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
