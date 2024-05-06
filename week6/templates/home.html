@@ -8,12 +8,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet"> 
   <script src="/static/main.js" defer></script>
-  <title>Week 4</title>
+  <title>Week 6</title>
 </head>
 <body>
   <header class="header">
-       <h1>歡迎光臨，請輸入帳號密碼</h1>
+       <h1>歡迎光臨，請註冊登入系統</h1>
   </header>
+  <div class="signup-container">
+    <h2>註冊帳號</h2>
+    <form action="/signup" method="post" id="signup-form">
+      <div class="form-group">
+        <label for="user">姓名</label>
+        <input type="text" id="signup-user" name="signup-user">
+      </div>
+      <div class="form-group">
+        <label for="username">帳號</label>
+        <input type="text" id="signup-username" name="signup-username">
+      </div>
+      <div class="form-group">
+        <label for="password">密碼</label>
+        <input type="password" id="signup-password" name="signup-password">
+      </div>
+      <button type="submit">註冊</button>
+    </form>
   <div class="login-container">
     <h2>登入系統</h2>
     <form action="/signin" method="post" id="login-form">
@@ -32,16 +49,5 @@
       </div>
           <button type="submit">登入</button>
   </form>
-  <hr>
-    <h2>計算正整數的平方</h2>
-    <form action="/square" method="get" id="square-form">
-      <div class="form-group">
-          <label>正整數 
-            <input type="text" id="square" name="number">
-          </label>
-      </div>
-      <button type="submit">計算</button>
-    </form>
-  </div>
 </body>
 </html>
