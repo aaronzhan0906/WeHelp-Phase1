@@ -21,7 +21,7 @@ h1 {
     font-weight: 500;
 }
 
-.signup-container, .login-container, #login-form {
+.message-submit-container, .signup-container, .signin-container, #login-form {
     font-size: 1.2rem;
     font-weight: 400;
     text-align: center;
@@ -78,7 +78,7 @@ button {
 hr {
     border: none;
     border-top: 1px solid #ccc;
-    margin: 20px 0;
+    margin: 40px;
   }
 
 .square-answer {
