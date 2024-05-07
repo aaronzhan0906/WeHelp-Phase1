@@ -3,6 +3,9 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
+import database
+mycusor = database.mydb.cursor()
+
 
 
 app = FastAPI()
@@ -31,7 +34,7 @@ async def signin(request: Request):
     if username == "test" and password == "test":
         session = request.session
         session["SIGNED-IN"] = True
-        session["user"] = "test_user"
+        session["user"] = "user" # 等下要從資料庫拿
         return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
     elif not username or not password:
         error_message = "請輸入帳號、密碼"
@@ -48,6 +51,17 @@ async def signup(request: Request):
     user = form_data.get("signup-user", "")
     username = form_data.get("signup-username", "")
     password = form_data.get("signup-password", "")
+    print (user, username, password)
+
+    # check if user exists
+    mycusor.execute("SELECT * FROM member WHERE username = %s", (username,))
+    check_result = mycusor.fetchall()
+    if check_result:
+        error_message = "Repeated username"
+        return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
+    else:
+        #補完
+
     return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
 
 
@@ -77,8 +91,3 @@ async def signout(request: Request):
     return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
 
 
-# Square Page with Form and Result 
-@app.get("/square/{number}", response_class=HTMLResponse)
-async def calculate_square(request: Request, number: int = Path(...)):
-    square_result = number ** 2
-    return templates.TemplateResponse("square.html", {"request": request, "square_result": square_result})
