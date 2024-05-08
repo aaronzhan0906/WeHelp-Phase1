@@ -32,30 +32,56 @@ async def signin(request: Request):
     password = form_data.get("signin-password", "")
 
     # Check if user exists by username and password
-    mycursor.execute("SELECT id, user, username , password FROM member WHERE username = %s AND password = %s", (username, password))
+    mycursor.execute("SELECT id, name, username , password FROM member WHERE username = %s AND password = %s", (username, password))
     member = mycursor.fetchone()  
-
     if member:
         session = request.session
         session["SIGNED-IN"] = True
-        session["id"] = {"user": member[0]}
-        session["user"] = {"user": member[1]}
-        session["username"] = {"user": member[2]}
-        return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
+        session["id"] = {"id": member[0]}
+        session["name"] = {"name": member[1]}
+        session["username"] = {"username": member[2]}
+        print(session["id"], session["name"] ,session["username"])
+        return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND,)
     else:
         error_message = "Username or password is not correct"
         return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
     
 
-# Success Page
+# Member Page
 @app.get("/member", response_class=HTMLResponse)
 async def success_page(request: Request):
     session = request.session
     if session.get("SIGNED-IN", False):
-        user = session.get("user", "") 
-        return templates.TemplateResponse("member.html", {"request": request, "user": user["user"]})
+        name = session.get("name", "")
+        username = session.get("username", "")
+        mycursor.execute("SELECT message.content, member.name FROM member JOIN message ON member.id = message.member_id")
+        messages = mycursor.fetchall()
+        return templates.TemplateResponse("member.html", {
+            "request": request,
+            "name": name["name"],
+            "messages": messages,
+            "current_username": username["username"]})
     else:
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
+
+
+# createMessage
+@app.post("/createMessage")
+async def create_message(request: Request):
+    form_data = await request.form()
+    member_id = request.session.get("id", "").get("id", "")
+    message_content = form_data.get("message-input", "")
+
+    # Insert the new message into table message
+    mycursor.execute("INSERT INTO message (member_id, content) VALUES (%s, %s)", (member_id, message_content))
+    database.mydb.commit()
+
+    return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
+
+# deleteMessage
+@app.post("/deleteMessage")
+async def delete_message(request: Request):
+    print("deleteMessage")
 
 
 # Error Page
@@ -71,21 +97,20 @@ async def signout(request: Request):
     session = request.session
     session.pop("SIGNED-IN", False)  
     session.pop("id", None)
-    session.pop("user", None)
+    session.pop("name", None)
     session.pop("username", None)
     print(request.session)
     return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
-
 
 
 # Signup
 @app.post("/signup", response_class=HTMLResponse)
 async def signup(request: Request):
     form_data = await request.form()
-    user = form_data.get("signup-user", "")
+    name = form_data.get("signup-name", "")
     username = form_data.get("signup-username", "")
     password = form_data.get("signup-password", "")
-    print (user, username, password)
+    print (name, username, password)
 
     # check if user exists
     mycursor.execute("SELECT * FROM member WHERE username = %s", (username,))
@@ -95,7 +120,7 @@ async def signup(request: Request):
         error_message = "Repeated username"
         return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
     else:
-        mycursor.execute("INSERT INTO member (user, username, password) VALUES (%s, %s, %s)", (user, username, password))
+        mycursor.execute("INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
         database.mydb.commit()
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
 

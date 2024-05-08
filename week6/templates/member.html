@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet"> 
-  <script src="/static/main.js" defer></script>
+  <script src="/static/deleteMessage.js" defer>
+  </script>
   <title>Week 6 member</title>
 </head>
 <body>
@@ -15,21 +16,29 @@
          <h1>歡迎光臨，這是會員頁</h1>
     </header>
     <div class="signin-container">
-      <h3>{{ user }}，歡迎登入系統</h3>
+      <h3>{{ name }}，歡迎登入系統</h3>
       <a href="/signout">登出系統</a>
     </div>
     <hr>
     <div class="message-submit-container">
       <h2>快來留言吧</h2>
-      <form action="/member" method="post" id="message-input">
+      <form action="/createMessage" method="post" id="message-input">
         <div class="form-group">
-          <label for="message">留言</label>
+          <label for="message-input">留言</label>
           <input type="text" id="message-input" name="message-input">
         </div>
-        <button type="submit">送出</button>
+        <button type="submit" class="submit-button">送出</button>
+      <hr>
       </form>
-    </div>
-    <hr>
-    
+      <div class="message-board">
+        {% for message_content, member_name in messages|reverse %}
+        <div class="message-group" id="message-group">
+          <p class="message-author">{{ member_name }}</p>
+          <p class="message-colon">:</p>
+          <p class="message-content">{{ message_content }}</p>
+          <button class="delete-button">X</button>
+        </div>
+        {% endfor %}
+      </div> 
   </body>
   </html>
