@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
@@ -53,17 +53,25 @@ async def success_page(request: Request):
     session = request.session
     if session.get("SIGNED-IN", False):
         name = session.get("name", "")
-        username = session.get("username", "")
         mycursor.execute("SELECT message.content, member.name FROM member JOIN message ON member.id = message.member_id")
         messages = mycursor.fetchall()
         return templates.TemplateResponse("member.html", {
             "request": request,
             "name": name["name"],
             "messages": messages,
-            "current_username": username["username"]})
+            })
     else:
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
-
+    
+# pass JSON to frontend
+@app.get("/api/messages")
+async def get_messages_api(request: Request):
+    session = request.session
+    username = session.get("username", "")
+    mycursor.execute("SELECT member.name, message.content, member.username FROM member JOIN message ON member.id = message.member_id")
+    messages = mycursor.fetchall()
+    return JSONResponse(content={"messages": messages,"current_username": username["username"]})
+    
 
 # createMessage
 @app.post("/createMessage")

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet"> 
-  <script src="/static/deleteMessage.js" defer>
+  <script src="/static/member.js" defer>
   </script>
   <title>Week 6 member</title>
 </head>
@@ -31,14 +31,7 @@
       <hr>
       </form>
       <div class="message-board">
-        {% for message_content, member_name in messages|reverse %}
-        <div class="message-group" id="message-group">
-          <p class="message-author">{{ member_name }}</p>
-          <p class="message-colon">:</p>
-          <p class="message-content">{{ message_content }}</p>
-          <button class="delete-button">X</button>
-        </div>
-        {% endfor %}
+        
       </div> 
   </body>
   </html>
