@@ -63,12 +63,13 @@ async def success_page(request: Request):
     else:
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     
+
 # pass JSON to frontend
 @app.get("/api/messages")
 async def get_messages_api(request: Request):
     session = request.session
     username = session.get("username", "")
-    mycursor.execute("SELECT member.name, message.content, member.username FROM member JOIN message ON member.id = message.member_id")
+    mycursor.execute("SELECT message.id, member.name, message.content, member.username FROM member JOIN message ON member.id = message.member_id")
     messages = mycursor.fetchall()
     return JSONResponse(content={"messages": messages,"current_username": username["username"]})
     
@@ -86,10 +87,17 @@ async def create_message(request: Request):
 
     return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
 
+
 # deleteMessage
 @app.post("/deleteMessage")
 async def delete_message(request: Request):
-    print("deleteMessage")
+    message_id = await request.json()
+   
+    print(message_id)
+    mycursor.execute("DELETE FROM message WHERE id = %s", (message_id,))
+    database.mydb.commit()
+
+    return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
 
 
 # Error Page
@@ -107,6 +115,7 @@ async def signout(request: Request):
     session.pop("id", None)
     session.pop("name", None)
     session.pop("username", None)
+    session.pop("user" , None)
     print(request.session)
     return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
 
