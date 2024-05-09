@@ -63,12 +63,17 @@ function createMessageComponent(message, currentUsername) {
         deleteButton.classList.add("delete-button");
         deleteButton.textContent = "X";
         deleteButton.addEventListener("click", () => {
+            const requestData = {
+                message_id: message.id,
+                current_username: currentUsername
+            };
+
             fetch("/deleteMessage",{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(message.id)
+                body: JSON.stringify(requestData)
             })
             .then(response => {
                 if(response.ok){

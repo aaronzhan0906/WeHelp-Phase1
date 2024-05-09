@@ -43,7 +43,7 @@ async def signin(request: Request):
         print(session["id"], session["name"] ,session["username"])
         return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND,)
     else:
-        error_message = "Username or password is not correct"
+        error_message = "帳號或密碼輸入錯誤"
         return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
     
 
@@ -91,11 +91,14 @@ async def create_message(request: Request):
 # deleteMessage
 @app.post("/deleteMessage")
 async def delete_message(request: Request):
-    message_id = await request.json()
-   
-    print(message_id)
-    mycursor.execute("DELETE FROM message WHERE id = %s", (message_id,))
-    database.mydb.commit()
+    request_data = await request.json()
+    message_id = request_data.get("message_id")    
+    frontend_current_username = request_data.get("current_username")
+    backend_current_username = request.session.get("username", "").get("username", "")
+
+    if frontend_current_username == backend_current_username:
+        mycursor.execute("DELETE FROM message WHERE id = %s", (message_id,))
+        database.mydb.commit()
 
     return RedirectResponse(url="/member", status_code=status.HTTP_302_FOUND)
 
@@ -134,13 +137,9 @@ async def signup(request: Request):
     check_result = mycursor.fetchone()
 
     if check_result:
-        error_message = "Repeated username"
+        error_message = "帳號已經被註冊"
         return RedirectResponse(url=f"/error?message={error_message}", status_code=status.HTTP_302_FOUND)
     else:
         mycursor.execute("INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
         database.mydb.commit()
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
-
-
-
-
