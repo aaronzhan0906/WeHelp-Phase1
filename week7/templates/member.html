@@ -17,12 +17,6 @@
     <div class="signin-container">
       <h3>{{ name }}，歡迎登入系統</h3>
       <a href="/signout">登出系統</a>
-      <br>
-      <h2>查詢會員姓名</h2>
-      <form id ="query-username-form">
-      <input type="text" id="query-username" name="query-username"> 
-      <button type="submit" class="query-button">查詢</button>
-      </form>
     </div>
     <hr>
     <div class="message-submit-container">
@@ -36,7 +30,24 @@
       <hr>
       </form>
       <div class="message-board">
-        
       </div> 
+      <div class="query-container">
+      <h2>查詢會員姓名</h2>
+      <form  id ="query-username-form">
+      <input type="text" id="query-username" name="query-username"> 
+      <button type="submit" class="query-button">查詢</button>
+      </form>
+      <div id="reply-query-username">
+
+      </div>
+      <h2>更新會員姓名</h2>
+      <form id ="update-username-form">
+      <input type="text" id="update-username" name="update-username"> 
+      <button type="submit" class="update-button">查詢</button>
+      </form>
+      </div>
   </body>
-  </html>
+  <footer>
+    <span></span>
+  </footer>
+</html>

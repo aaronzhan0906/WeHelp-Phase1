@@ -87,3 +87,32 @@ function createMessageComponent(message, currentUsername) {
     return messageGroup;
 };
 
+
+// query username feature
+const queryUsernameForm = document.getElementById("query-username-form");
+const queryUsernameInput = document.getElementById("query-username");
+const replyQueryUsername = document.getElementById("reply-query-username")
+
+queryUsernameForm.addEventListener("submit", async(event) => {
+    event.preventDefault();
+    replyQueryUsername.textContent=""
+
+    const query_username = queryUsernameInput.value.trim();
+    const paragraphElement = document.createElement("p");
+    const response = await fetch(`/api/member?username=${query_username}`);
+    const data = await response.json();
+
+    if(data.data !== null ){
+        const {name, username} = data.data;
+        const reply_content = `${name}(${username})`;
+        paragraphElement.textContent = reply_content;
+        replyQueryUsername.appendChild(paragraphElement);
+
+    } else {
+       paragraphElement.textContent = "無此會員";
+       replyQueryUsername.appendChild(paragraphElement)
+    }
+})
+
+
+// rename feature

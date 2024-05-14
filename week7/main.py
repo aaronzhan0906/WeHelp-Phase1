@@ -62,19 +62,6 @@ async def success_page(request: Request):
             })
     else:
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
-    
-# Member Query API
-@app.get("/api/member")
-async def member_query(username: str = None):
-    if not username:
-        return JSONResponse({"data": None})
-    
-    mycursor.execute("SELECT id, name, username FROM member WHERE username = %s", (username,))
-    member = mycursor.fetchone()
-    if member:
-        return JSONResponse({"data": {"id": member[0], "name": member[1], "username": member[2]}})
-    else:
-        return JSONResponse({"data": None})
 
     
 
@@ -157,3 +144,32 @@ async def signup(request: Request):
         mycursor.execute("INSERT INTO member (name, username, password) VALUES (%s, %s, %s)", (name, username, password))
         database.mydb.commit()
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
+    
+
+
+
+
+
+
+
+
+# Member Query API
+@app.get("/api/member")
+async def query_member(request: Request, username: str = None):
+    if username:
+        print(username)
+        mycursor.execute("SELECT id, name, username FROM member WHERE username = %s" ,(username,))
+        member = mycursor.fetchone()
+
+        if member:
+            return JSONResponse(content={"data": {"id": member[0], "name": member[1], "username": member[2]}})
+        else:
+            return JSONResponse(content={"data": None})
+        
+    else:
+        print ("NO USERNAME")
+
+
+# @app.patch("/api/member")
+# async def update_name(request: Request, username: str = None):
+#     if username 

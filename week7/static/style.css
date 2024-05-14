@@ -75,19 +75,6 @@ input[type="password"]
     font-size: 0.9rem;
 }
 
-.query-button {
-    margin-left: 5px;
-    margin-bottom: 15px;
-    padding: 3px 17px;
-    text-align: center;
-    padding: 6px 12px;
-    background-color: #ededed;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
 
 hr {
     border: none;
@@ -141,4 +128,24 @@ p {
 
 .delete-button:focus {
     outline: none; 
+}
+
+
+
+.query-button, .update-button {
+    margin-left: 5px;
+    margin-bottom: 15px;
+    padding: 3px 17px;
+    text-align: center;
+    padding: 6px 12px;
+    background-color: #ededed;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+
+span {
+    margin: 0 20px;
 }
