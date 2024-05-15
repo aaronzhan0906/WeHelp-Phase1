@@ -52,27 +52,30 @@ async def signin(request: Request):
 async def success_page(request: Request):
     session = request.session
     if session.get("SIGNED-IN", False):
-        name = session.get("name", "")
+        name = session.get("name", "").get("name", "")
         mycursor.execute("SELECT message.content, member.name FROM member JOIN message ON member.id = message.member_id")
         messages = mycursor.fetchall()
         return templates.TemplateResponse("member.html", {
             "request": request,
-            "name": name["name"],
             "messages": messages,
             })
     else:
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
 
-    
 
+# Welcome Name
 # pass JSON to frontend
 @app.get("/api/messages")
 async def get_messages_api(request: Request):
     session = request.session
-    username = session.get("username", "")
+    member_id = session.get("id", "").get("id", "")
+    mycursor.execute("SELECT member.name FROM member WHERE id = %s", (member_id,))
+    name = mycursor.fetchone()[0]
+    print(name)
+    username = session.get("username", "").get("username", "")
     mycursor.execute("SELECT message.id, member.name, message.content, member.username FROM member JOIN message ON member.id = message.member_id")
     messages = mycursor.fetchall()
-    return JSONResponse(content={"messages": messages,"current_username": username["username"]})
+    return JSONResponse(content={"messages": messages,"current_username": username, "name": name})
     
 
 # createMessage
@@ -93,10 +96,9 @@ async def create_message(request: Request):
 @app.post("/deleteMessage")
 async def delete_message(request: Request):
     request_data = await request.json()
-    message_id = request_data.get("message_id")    
     frontend_current_username = request_data.get("current_username")
+    message_id = request_data.get("message_id")    
     backend_current_username = request.session.get("username", "").get("username", "")
-
     if frontend_current_username == backend_current_username:
         mycursor.execute("DELETE FROM message WHERE id = %s", (message_id,))
         database.mydb.commit()
@@ -146,13 +148,6 @@ async def signup(request: Request):
         return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     
 
-
-
-
-
-
-
-
 # Member Query API
 @app.get("/api/member")
 async def query_member(request: Request, username: str = None):
@@ -170,6 +165,20 @@ async def query_member(request: Request, username: str = None):
         print ("NO USERNAME")
 
 
-# @app.patch("/api/member")
-# async def update_name(request: Request, username: str = None):
-#     if username 
+@app.patch("/api/member")
+async def update_name(request: Request):
+    request_data = await request.json()
+    new_name = request_data.get("name")
+    session = request.session
+    member_id = session.get("id", "").get("id", "")
+
+    if session.get("SIGNED-IN", False):
+        mycursor.execute("UPDATE member SET name = %s WHERE id= %s", (new_name, member_id))
+        database.mydb.commit()
+        mycursor.execute("SELECT name FROM member WHERE id = %s", (member_id,))
+        mycursor.fetchone()
+        print(mycursor.fetchone())
+        return JSONResponse(content={"ok": True}) 
+    else: 
+        return JSONResponse(content={"error": True})
+  
