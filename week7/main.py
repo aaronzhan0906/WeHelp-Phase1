@@ -69,9 +69,10 @@ async def success_page(request: Request):
 async def get_messages_api(request: Request):
     session = request.session
     member_id = session.get("id", "").get("id", "")
+
     mycursor.execute("SELECT member.name FROM member WHERE id = %s", (member_id,))
     name = mycursor.fetchone()[0]
-    print(name)
+
     username = session.get("username", "").get("username", "")
     mycursor.execute("SELECT message.id, member.name, message.content, member.username FROM member JOIN message ON member.id = message.member_id")
     messages = mycursor.fetchall()
@@ -175,9 +176,6 @@ async def update_name(request: Request):
     if session.get("SIGNED-IN", False):
         mycursor.execute("UPDATE member SET name = %s WHERE id= %s", (new_name, member_id))
         database.mydb.commit()
-        mycursor.execute("SELECT name FROM member WHERE id = %s", (member_id,))
-        mycursor.fetchone()
-        print(mycursor.fetchone())
         return JSONResponse(content={"ok": True}) 
     else: 
         return JSONResponse(content={"error": True})

@@ -1,3 +1,7 @@
+window.addEventListener("load", () => {
+    fetchAndDisplay(); 
+});
+
 function fetchAndDisplay() {
     fetch("/api/messages")
         .then(response => response.json())
@@ -7,26 +11,19 @@ function fetchAndDisplay() {
             const welcomeName = document.getElementById("welcome-name");
             welcomeName.textContent = `${name}, 歡迎登入系統`;
             
+            // classifyMessages and display
             const messages = data.messages;
             const currentUsername = data.current_username;
             const messageBoard = document.querySelector(".message-board");
-            // classifyMessages
             const classifiedMessages = classifyMessages(messages);
             const originalMessageGroups = Object.values(classifiedMessages);
-            //arrangement in descending power
             const sortedMessages = originalMessageGroups.flat().sort((a, b) => b.id - a.id);
-            // create message components
             sortedMessages.forEach(message => {
                 const messageComponent = createMessageComponent(message, currentUsername);
                 messageBoard.appendChild(messageComponent);
             });
         });
 }
-
-
-window.addEventListener("load", () => {
-    fetchAndDisplay(); 
-});
 
   
 function classifyMessages(messages) {
