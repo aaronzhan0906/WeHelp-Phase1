@@ -32,3 +32,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
 });
+
+fetch('https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error('There was a problem with the fetch operation:', error));

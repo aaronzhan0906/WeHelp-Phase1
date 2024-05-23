@@ -170,3 +170,4 @@ function clearFormInputs(){
     queryUsernameInput.value = "";
     updateUsernameInput.value = "";
 }
+
